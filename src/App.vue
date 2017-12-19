@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-
+    
     <div class="wrapper">
       <right-column :generals="generals" :socials="socials"></right-column>
-      <left-column :generals="generals" :education="education" :work="work" :skills="skills"></left-column>
+      <left-column :generals="generals" :education="education" :work="work" :skills="skills" :portfolio="portfolio"></left-column>
     </div>
 
     <loader></loader>
 
-    <portfolio></portfolio>
+    <portfolio :generals="generals" :portfolio="portfolio"></portfolio>
       
   </div>
 </template>
@@ -19,18 +19,19 @@
   import LeftColumn from './components/LeftColumn'
   import Loader from './components/Loader'
   import Portfolio from './components/Portfolio'  
+  import store from './vuex/store'
 
 window.data = {
   generals: {
-    siteName: 'Marco Pavan personal site',
+    siteName: 'Marco Pavan | Front-end developer',
     name: 'Marco Pavan',
     email: 'marcopavan.mp@gmail.com',
     tel: '+39 329 5698985',
     skype: 'marco.pavan_80',
     address: 'via Tagliamento, 10 <br/> 33100 Udine <br/> Italy',
-    title: 'Professional Web Developer',
-    shortDesc: 'I love <strong>Programming</strong>, <strong>Photografy</strong> and <strong>Mountain bike</strong>',
-    personalDesc: '...I\'m a <i class="text-color">Front end Web Developer</i> from <i>Udine</i>, Italy. <br/>I have a technical and scientific studies background and a good experience in medium- large companies with an international profile. During my previous jobs I learned what it means to work in team and what kind of effort is needed to manage large projects. During 2016 I choose to undertake the study of the Russian language and culture to broaden my education in an area less technical and more humanistic. I hope to find an activity that lets me to combine and to learn more about these two life aspects. ',  
+    title: 'Front-end developer',
+    shortDesc: 'Professional front-end dev based on Milan (Italy)',
+    personalDesc: '<p>Scientific studies background and a good experience in medium-large companies with an international profile. I learned what it means to work in team and what kind of effort is needed to manage large projects.</p>',
     imagesUrl: '/src/assets/images/',
     docsUrl: '/src/assets/docs/'
   },
@@ -53,45 +54,63 @@ window.data = {
       id: '1',
       where: 'Università degli Studi di Udine - Udine University (Italy)',
       what: 'Scienza Naturali Fisiche e Matematiche - Science (Information Technology)',
-      icon: 'uniud_logo.png'
+      icon: 'uniud_logo.png',
+      url: 'https://www.uniud.it/'
     },
     second: {
       id: '2',
-      where: 'Liceo Scientifico Niccol&ograve; Copernico - Science High School',
-      what: 'Science oriented high school',
-      icon: 'copernico_logo.png'
+      where: 'Liceo Scientifico Niccolò Copernico - Science High School',
+      what: 'Science-oriented high school',
+      icon: 'copernico_logo.png',
+      url: 'https://www.liceocopernico.gov.it/'
     }
   },
 
   work: {
     first: {
       id: '1',
-      where: 'Neticon',
+      where: 'Neticon - Milano',
       what: 'Senior Front end Web Developer',
       howLong: '2016 - ongoing',
-      icon: 'neticon_logo.png'
+      icon: 'neticon_logo.png',
+      url: 'http://www.neticon.it/home/',
+      description: 'Web agency based in Milan. <br/>Main clients: Luxottica, Ray-Ban, Persol, Versace, Sunglass Hut.<br/> One project I used to work on: <a title="A projetc I worked on in Neticon" href="https://www.ray-ban.com/italy/personalizza">Ray-Ban Remix</a>'
     },
     second: {
       id: '2',
-      where: 'YOOX Group',
+      where: 'YOOX Group - Bologna',
       what: 'Front end Web Developer',
       howLong: '2012 - 2015',
-      icon: 'yoox_logo.png'
+      icon: 'yoox_logo.png',
+      url: 'https://www.yoox.com',
+      description: 'Web interface building for fashion e-commerce sites: thecorner.com, shoescribe.com. <br/> Think, re-think, development and maintenance of front-end sensible site, where the user experience can give a real feedback and value for the company.'
     },
     third: {
       id: '3',
-      where: 'Usablenet, Inc.',
+      where: 'Usablenet, Inc. - Udine',
       what: 'Front end Web Developer',
       howLong: '2010 - 2012',
       role: 'Team Leader',
-      icon: 'usablenet_logo.png'
+      icon: 'usablenet_logo.png',
+      url: 'https://usablenet.com/',
+      description: 'Web mobile development. XSLT transformation and optimization from original (desktop) site to a brand new mobile site.'
     },
     fourth: {
       id: '4',
-      where: 'Italian Army',
+      where: 'Italian Army - Codroipo (Udine)',
       what: 'Professional Volunteer private',
       howLong: '2000 - 2001',
-      icon: 'novara_logo.png'
+      icon: 'novara_logo.png',
+      url: 'http://www.esercito.difesa.it/organizzazione/capo-di-sme/Comando-Forze-Operative-Nord/Divisione-Friuli/Brigata-Corazzata-Ariete/Reggimento-Lancieri-di-Novara-5',
+      description: ''
+    },
+    five: {
+      id: '5',
+      where: 'Others',
+      what: 'Professional Volunteer private',
+      howLong: '1998 - 2008',
+      url: '',
+      description: 'HelpPhone: Telephone assistance to customers regarding the security of credit and debit cards. <br/> Autotrasporti Gregoris Marisa: Hauler'
     }
   },
 
@@ -132,6 +151,30 @@ window.data = {
       level: '50',
       icon: 'database.png'
     }
+  },
+
+  portfolio: {
+    one: {
+      id: 1,
+      name: 'Trading Radar',
+      icon: 'tradingradar.png',
+      logo: 'tradingradar-logo.png',
+      description: 'Trading Radar scouts the Web searching for data, news, suggestions about Italian FTSE MIB market stocks. It collects data and shows the user the a brief summary whit real-time press release, filters and detailed techinal infos. <br/>Registered user can also put their own analysis for each stock.'
+    },
+    two: {
+      id: 2,
+      name: 'Ray-Ban Lenses Prescription',
+      icon: 'ray-ban-lenses-prescription.png',
+      logo: 'ray-ban-logo.png',
+      description: 'A promotional page to describe the new Prescription Lenses offer from Ray-Ban'
+    } ,
+    three: {
+      id: 3,
+      name: 'Il Giardiniere',
+      icon: 'ilgiardiniere.png',
+      logo: 'ilgiardiniere-logo.png',
+      description: 'A simple Web page to support a local gardener service. Major effort was to achive the besto position on Google SERP page for some sensible keywords (try: "giardiniere a udine")'
+    }   
   }
 
 }
@@ -144,14 +187,21 @@ export default {
     Loader,
     Portfolio
   },
-  data () {
-    return window.data
+  store,
+  data: function() {
+    return window.data //as function to avoid scope-leak
+  },
+  methods: {
+    
   }
 }
 </script>
 
-<style scoped>
-#app {
-  
-}
+<style lang="scss" scoped>
+  $titleColor: #ff0000;
+  #app {
+    h1 {
+      color: $titleColor;
+    }
+  }
 </style>

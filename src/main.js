@@ -7,16 +7,16 @@ import router from './router'
 Vue.config.productionTip = false
 
 
+//Some filters
 Vue.filter('lowercase', (key) => {
   return key.toLowerCase();
 })
 
 
-/* eslint-disable no-new */
+//App initialization
 new Vue({
   el: 'app',
   router,
-  template: '<App/>',
   components: { App }
 })
 
